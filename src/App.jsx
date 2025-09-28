@@ -24,7 +24,7 @@ const projects = [
     title: "Short URL Service",
     desc: "URL shortener with analytics, Redis caching and secure API endpoints.",
     tags: ["Node.js", "Redis", "TypeScript"],
-    link: "https://github.com/UTKARSHRAIKWAR/SHORT_URL_COMPLETE.git",
+    link: "https://urlshortmini.netlify.app",
   },
 ];
 
