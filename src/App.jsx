@@ -135,7 +135,7 @@ export default function Portfolio() {
           <h3 className="text-2xl font-bold text-white">Selected Projects</h3>
           <p className="text-slate-400 mt-2">
             A small selection of recent work — click to explore code and live
-            demos. hell yaa
+            demos. hell ya
           </p>
 
           <div className="mt-6 grid sm:grid-cols-2 gap-6">
