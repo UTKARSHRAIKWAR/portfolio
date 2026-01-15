@@ -5,27 +5,27 @@ import { useState } from "react";
 const projects = [
   {
     title: "AI Interview Platform",
-    desc: "AI-powered mock interview system with GPT-based evaluation and feedback.",
+    desc: "AI-powered mock interview system with GPT-based evaluation, feedback, and performance analysis.",
     tags: ["React", "LangChain", "Node.js", "MongoDB"],
     link: "https://github.com/UTKARSHRAIKWAR/Project-Ai-interview-Platform.git",
   },
   {
-    title: "Job Portal",
-    desc: "Interactive job and internship platform for students and recruiters.",
-    tags: ["React", "Express", "MongoDB", "REST API"],
-    link: "https://github.com/UTKARSHRAIKWAR/Job-Portal.git",
-  },
-  {
     title: "Real-Time Chat Application",
-    desc: "Scalable WebSocket chat with React frontend, Node/Express backend, and MongoDB persistence.",
+    desc: "Scalable real-time chat application using WebSockets with secure authentication and message persistence.",
     tags: ["React", "Node.js", "WebSocket", "MongoDB"],
     link: "https://github.com/UTKARSHRAIKWAR/CHAT-APP.git",
   },
   {
-    title: "Short URL Service",
-    desc: "URL shortener with analytics, Redis caching and secure API endpoints.",
-    tags: ["Node.js", "Redis", "TypeScript"],
-    link: "https://urlshortmini.netlify.app",
+    title: "File Storage Service",
+    desc: "Secure cloud-based file storage system with authentication, role-based access control, and file versioning.",
+    tags: ["React", "Node.js", "Express", "MongoDB", "AWS S3"],
+    link: "https://github.com/UTKARSHRAIKWAR/File-Storage-Service.git", // add link when ready
+  },
+  {
+    title: "Civic Reporting App",
+    desc: "Location-based civic issue reporting platform with real-time tracking and admin dashboards.",
+    tags: ["React", "Express.js", "MongoDB", "Leaflet.js", "Tailwind CSS"],
+    link: "https://github.com/UTKARSHRAIKWAR/civic-issue-reporting.git", // add link when ready
   },
 ];
 
@@ -157,11 +157,18 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
           >
             <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-              <div className="text-center p-4">
-                <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-xs sm:text-sm">
-                  Your Photo
+              <div className="flex flex-col items-center text-center">
+                {/* Avatar */}
+                <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-slate-700">
+                  <img
+                    src="/profile.jpg"
+                    alt="Utkarsh Raikwar"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <p className="mt-3 text-xs sm:text-sm text-slate-400">
+
+                {/* Caption */}
+                <p className="mt-4 text-xs sm:text-sm text-slate-400">
                   Full-stack • AI • Cloud
                 </p>
               </div>
@@ -227,12 +234,12 @@ export default function Portfolio() {
                 Languages & Frameworks
               </h4>
               <ul className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-400">
-                <li>JavaScript / TypeScript</li>
+                <li>JavaScript</li>
                 <li>React</li>
                 <li>Node.js / Express</li>
                 <li>Python</li>
-                <li>Java / C++</li>
-                <li>MongoDB / SQL</li>
+                <li>Java </li>
+                <li>MongoDB / Postgres</li>
               </ul>
             </div>
 
