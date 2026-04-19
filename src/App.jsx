@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Menu } from "lucide-react";
+import { Mail, Github, Linkedin, Menu, Send, CheckCircle, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 const projects = [
@@ -31,6 +31,34 @@ const projects = [
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState("idle");
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus("submitting");
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/f0e3839ff162b1f7dedbf9466006336a", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        setFormStatus("success");
+      } else {
+        setFormStatus("error");
+      }
+    } catch (error) {
+      setFormStatus("error");
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 text-slate-100 antialiased">
@@ -129,7 +157,7 @@ export default function Portfolio() {
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 text-slate-400 text-sm">
               <a
-                href="mailto:utkarshraikwar555@gmail.com"
+                href="mailto:utkarshraikwar.dev@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 hover:text-slate-200 transition-colors"
@@ -272,7 +300,7 @@ export default function Portfolio() {
               </p>
 
               <a
-                href="mailto:utkarshraikwar555@gmail.com"
+                href="mailto:utkarshraikwar.dev@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm hover:bg-slate-700 hover:text-white transition-colors"
@@ -299,51 +327,93 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <form 
-              className="rounded-xl border border-slate-700 bg-slate-800 p-6 space-y-3"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                const name = formData.get('name') || '';
-                const email = formData.get('email') || '';
-                const message = formData.get('message') || '';
-                const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-                const body = encodeURIComponent(`${message}\n\nContact Email: ${email}`);
-                window.open(`mailto:utkarshraikwar555@gmail.com?subject=${subject}&body=${body}`);
-              }}
-            >
-              <label className="block text-xs text-slate-400">Your name</label>
-              <input
-                name="name"
-                required
-                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                placeholder="Jane Doe"
-              />
-              <label className="block text-xs text-slate-400">Email</label>
-              <input
-                name="email"
-                type="email"
-                required
-                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                placeholder="you@company.com"
-              />
-              <label className="block text-xs text-slate-400">Message</label>
-              <textarea
-                name="message"
-                required
-                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
-                rows={4}
-                placeholder="Short message..."
-              />
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="rounded-md bg-indigo-600 text-white px-4 py-2 text-sm hover:bg-indigo-500 transition-colors shadow-sm"
+            {formStatus === "success" ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-8 flex flex-col items-center justify-center text-center h-full space-y-4"
+              >
+                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400">
+                  <CheckCircle size={32} />
+                </div>
+                <div>
+                  <h4 className="text-lg font-semibold text-emerald-100">Message sent!</h4>
+                  <p className="mt-2 text-sm text-emerald-200/70">
+                     Thanks for reaching out. I'll get back to you as soon as possible.
+                  </p>
+                </div>
+                <button 
+                  onClick={() => setFormStatus("idle")}
+                  className="mt-4 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm transition-colors border border-slate-700"
                 >
-                  Send message
+                  Send another message
                 </button>
-              </div>
-            </form>
+              </motion.div>
+            ) : (
+              <form 
+                className="rounded-xl border border-slate-700 bg-slate-800 p-6 space-y-4 shadow-xl"
+                onSubmit={handleFormSubmit}
+              >
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1">Your name</label>
+                  <input
+                    name="name"
+                    required
+                    disabled={formStatus === "submitting"}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all disabled:opacity-50"
+                    placeholder="Jane Doe"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-slate-400 mb-1">Email address</label>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    disabled={formStatus === "submitting"}
+                    className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all disabled:opacity-50"
+                    placeholder="you@company.com"
+                  />
+                </div>
+                <div>
+                   <label className="block text-xs font-medium text-slate-400 mb-1">Message</label>
+                   <textarea
+                     name="message"
+                     required
+                     disabled={formStatus === "submitting"}
+                     className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all disabled:opacity-50 resize-y"
+                     rows={4}
+                     placeholder="How can I help you?"
+                   />
+                </div>
+                
+                {formStatus === "error" && (
+                  <div className="text-red-400 text-xs p-3 bg-red-400/10 rounded-lg border border-red-400/20">
+                    Something went wrong. Please try again or email me directly.
+                  </div>
+                )}
+                
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={formStatus === "submitting"}
+                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-indigo-600 text-white px-4 py-2.5 text-sm font-medium hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {formStatus === "submitting" ? (
+                      <>
+                         <Loader2 size={16} className="animate-spin" />
+                         Sending...
+                      </>
+                    ) : (
+                      <>
+                         <Send size={16} />
+                         Send message
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </section>
 
