@@ -40,7 +40,7 @@ export default function Portfolio() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/f0e3839ff162b1f7dedbf9466006336a", {
+      const response = await fetch(`https://formsubmit.co/ajax/${import.meta.env.VITE_FORMSUBMIT_TOKEN}`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ export default function Portfolio() {
 
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 text-slate-400 text-sm">
               <a
-                href="mailto:utkarshraikwar.dev@gmail.com"
+                href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 hover:text-slate-200 transition-colors"
@@ -300,7 +300,7 @@ export default function Portfolio() {
               </p>
 
               <a
-                href="mailto:utkarshraikwar.dev@gmail.com"
+                href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm hover:bg-slate-700 hover:text-white transition-colors"
