@@ -130,7 +130,9 @@ export default function Portfolio() {
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 text-slate-400 text-sm">
               <a
                 href="mailto:utkarshraikwar555@gmail.com"
-                className="inline-flex items-center gap-2 hover:text-slate-200"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-slate-200 transition-colors"
               >
                 <Mail size={16} /> Email
               </a>
@@ -271,7 +273,9 @@ export default function Portfolio() {
 
               <a
                 href="mailto:utkarshraikwar555@gmail.com"
-                className="mt-4 inline-flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 rounded-md border border-slate-700 px-4 py-2 text-sm hover:bg-slate-700 hover:text-white transition-colors"
               >
                 <Mail size={16} /> Email me
               </a>
@@ -295,27 +299,46 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <form className="rounded-xl border border-slate-700 bg-slate-800 p-6 space-y-3">
+            <form 
+              className="rounded-xl border border-slate-700 bg-slate-800 p-6 space-y-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const name = formData.get('name') || '';
+                const email = formData.get('email') || '';
+                const message = formData.get('message') || '';
+                const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+                const body = encodeURIComponent(`${message}\n\nContact Email: ${email}`);
+                window.open(`mailto:utkarshraikwar555@gmail.com?subject=${subject}&body=${body}`);
+              }}
+            >
               <label className="block text-xs text-slate-400">Your name</label>
               <input
-                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
+                name="name"
+                required
+                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="Jane Doe"
               />
               <label className="block text-xs text-slate-400">Email</label>
               <input
-                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
+                name="email"
+                type="email"
+                required
+                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="you@company.com"
               />
               <label className="block text-xs text-slate-400">Message</label>
               <textarea
-                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
+                name="message"
+                required
+                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
                 rows={4}
                 placeholder="Short message..."
               />
               <div className="flex justify-end">
                 <button
-                  type="button"
-                  className="rounded-md bg-indigo-600 text-white px-4 py-2 text-sm"
+                  type="submit"
+                  className="rounded-md bg-indigo-600 text-white px-4 py-2 text-sm hover:bg-indigo-500 transition-colors shadow-sm"
                 >
                   Send message
                 </button>
